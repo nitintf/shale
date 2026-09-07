@@ -1,0 +1,13 @@
+# build output
+/bin/
+*.test
+*.out
+
+# database files produced by tests and manual runs
+*.db
+*.wal
+
+# editor / OS
+.DS_Store
+.idea/
+.vscode/
