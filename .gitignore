@@ -11,3 +11,6 @@
 .DS_Store
 .idea/
 .vscode/
+
+# local planning notes, not part of the repo
+docs.md
