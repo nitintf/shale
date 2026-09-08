@@ -15,12 +15,15 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v7
         with:
           # Read the version from go.mod so there is one source of truth.
           go-version-file: go.mod
+          # shale has no third-party dependencies, so there is no go.sum and
+          # nothing to cache. Without this, setup-go warns on every run.
+          cache: false
 
       # gofmt -l only lists files, it never fails, so the exit code has to be
       # forced or unformatted code sails through CI.
@@ -46,11 +49,12 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v7
         with:
           go-version-file: go.mod
+          cache: false
 
       - name: build
         run: go build ./...
