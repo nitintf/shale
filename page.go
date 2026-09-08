@@ -63,6 +63,22 @@ func NewPage() *Page {
 	return p
 }
 
+// PageFrom wraps an existing buffer as a page without copying or initialising it.
+//
+// NewPage is for making a brand new empty page: it allocates and writes a fresh
+// header. PageFrom is for bytes that are already a page, freshly read off disk or
+// sitting in a buffer pool frame, so it leaves the header alone.
+//
+// The buffer is not copied. The returned Page reads and writes the caller's
+// bytes directly, which is what makes a cached page byte-for-byte identical to
+// the one on disk.
+func PageFrom(buf []byte) *Page {
+	if len(buf) != PageSize {
+		panic("shale: buffer is not exactly one page")
+	}
+	return &Page{data: buf}
+}
+
 func (p *Page) u16(off int) uint16 {
 	return binary.LittleEndian.Uint16(p.data[off:])
 }
