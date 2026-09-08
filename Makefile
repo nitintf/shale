@@ -8,7 +8,7 @@ bench:
 
 lint:
 	go vet ./...
-	gofmt -l .
+	@test -z "$$(gofmt -l .)" || (gofmt -l . && echo 'run: gofmt -w .' && exit 1)
 
 cover:
 	go test -coverprofile=coverage.out ./...
